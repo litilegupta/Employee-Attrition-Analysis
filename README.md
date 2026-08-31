@@ -1,252 +1,121 @@
-📊 HR Analytics & Employee Attrition | SQL & Power BI
+# 📊 HR Analytics & Employee Attrition | SQL & Power BI
 
-A complete HR Analytics project using SQL Server for data cleaning and analysis and Power BI for interactive dashboard creation. The project focuses on understanding employee attrition and identifying workforce patterns.
+A data analytics project using **SQL Server** and **Power BI** to analyse employee attrition and workforce patterns.
 
-📌 Project Overview
+## 📌 Project Overview
 
-This project analyses employee HR data to understand employee attrition, job roles, departments, salary, experience, demographics, and work conditions.
+The project covers data cleaning, SQL analysis, and an interactive Power BI dashboard to understand employee attrition across different HR factors.
 
-SQL was used to clean and analyse the data, while Power BI was used to create an interactive dashboard for business insights.
+## 🎯 Objectives
 
-🎯 Objectives
+- Clean HR data using SQL
+- Identify and remove duplicate records
+- Standardise inconsistent values
+- Analyse employee attrition
+- Create SQL views for analysis
+- Build an interactive Power BI dashboard
 
-Clean and prepare HR data using SQL.
+## 🛠️ Tools Used
 
-Identify and remove duplicate records.
+- SQL Server
+- SQL
+- Power BI
+- Power Query
 
-Standardise inconsistent data values.
+## 📂 Dataset
 
-Analyse employee attrition using SQL.
+The dataset contains **1,470 employee records** with information about:
 
-Create SQL views for Power BI.
+- Employee demographics
+- Department and job role
+- Salary and experience
+- Job satisfaction
+- Overtime and business travel
+- Employee attrition
 
-Build an interactive Power BI dashboard.
+`Attrition = Yes` means the employee left the company, while `No` means the employee stayed.
 
-Generate meaningful HR insights.
+## 🧹 SQL Data Cleaning
 
-🛠️ Technologies Used
+### 1. Create Attrition Value
 
-SQL Server
+Converted `Attrition` into numerical values:
 
-SQL
-
-Power BI
-
-Power Query
-
-Data Cleaning
-
-Data Visualization
-
-📂 Dataset
-
-The dataset contains 1,470 employee records and 41 columns.
-
-Important fields include:
-
-Employee ID
-
-Age
-
-Gender
-
-Department
-
-Job Role
-
-Job Level
-
-Education Field
-
-Monthly Income
-
-Years At Company
-
-Over Time
-
-Job Satisfaction
-
-Work Life Balance
-
-Business Travel
-
-Attrition
-
-Attrition
-
-Yes → Employee left the company
-No  → Employee stayed
-
-A numerical attrition_value column was created:
-
-Yes → 1
-No  → 0
-
-This was used to calculate attrition counts and percentages.
-
-🧹 SQL Data Cleaning
-
-1. Create Attrition Value
-
-ALTER TABLE dbo.HR_Analytics
-ADD attrition_value INT;
-
-UPDATE dbo.HR_Analytics
-SET attrition_value =
+```sql
 CASE
-    WHEN attrition = 'Yes' THEN 1
+    WHEN Attrition = 'Yes' THEN 1
     ELSE 0
-END;
+END
+```
 
-This converts the Attrition field into numerical values for easier analysis.
+### 2. Remove Duplicate Records
 
-2. Remove Unused Column
+Used `ROW_NUMBER()` and `PARTITION BY` to identify duplicate employee records and retained distinct records.
 
-The YearsWithCurrManager column was removed as it was not useful for the planned analysis.
+### 3. Standardise Data
 
-ALTER TABLE dbo.HR_Analytics
-DROP COLUMN YearsWithCurrManager;
+Corrected inconsistent `BusinessTravel` values such as `TravelRarely` and `Travel_Rarely`.
 
-3. Check and Remove Duplicates
+## 📈 SQL Analysis
 
-Duplicate employee records were identified using ROW_NUMBER() and PARTITION BY.
+Analysed attrition by:
 
-Distinct records were then stored temporarily in HR2, the original table was truncated, and the cleaned records were inserted back.
+- Age Group
+- Department
+- Education Field
+- Job Role
+- Salary Slab
+- Years at Company
+- Overtime
+- Gender
 
-SELECT DISTINCT *
-INTO dbo.HR2
-FROM dbo.HR_Analytics;
+Created SQL views for these analyses and used a CTE for additional analysis.
 
-After reinserting the distinct records, the temporary table was deleted.
+## 📊 Power BI Dashboard
 
-4. Standardise Business Travel
+The dashboard includes:
 
-Inconsistent values such as TravelRarely and Travel_Rarely were identified and standardised.
+- Total Employees
+- Attrition
+- Attrition Rate
+- Active Employees
+- Average Age
+- Department-wise Attrition
+- Employees by Age Group
+- Job Satisfaction
+- Education-wise Attrition
+- Gender and Age Group Attrition
 
-UPDATE dbo.HR_Analytics
-SET BusinessTravel = 'Travel_Rarely'
-WHERE BusinessTravel = 'TravelRarely';
+## 💡 Key Insights
 
-📈 SQL Data Analysis
+- Identified employee attrition patterns across different groups.
+- Compared attrition across departments, job roles, salary levels, and tenure.
+- Analysed the effect of overtime and employee demographics on attrition.
+- Built an interactive dashboard to support HR decision-making.
 
-After cleaning, SQL was used to analyse employee attrition across different dimensions:
+## 📁 Project Structure
 
-Attrition by Age Group
-
-Attrition by Department
-
-Attrition by Education Field
-
-Attrition by Job Role
-
-Attrition by Salary Slab
-
-Attrition by Years at Company
-
-Attrition by Overtime
-
-Attrition by Gender
-
-Attrition percentage was calculated using:
-
-Attrition Rate =
-Employees Attrited / Total Employees × 100
-
-SQL views were created for the analysis:
-
-AttVSAge
-AttVSDep
-AttVSEdu
-AttVSJob
-AttVSSal
-AttVSYrs
-AttVSOverT
-AttVSGen
-
-A CTE (Common Table Expression) was also used for age-group attrition analysis.
-
-📊 Power BI Dashboard
-
-The cleaned SQL data and analysis were used to build an interactive Power BI dashboard.
-
-Dashboard Features
-
-Total Employees
-
-Attrition Count
-
-Attrition Percentage
-
-Active Employees
-
-Attrition by Age Group
-
-Attrition by Department
-
-Attrition by Education Field
-
-Attrition by Job Role
-
-Attrition by Salary Slab
-
-Attrition by Years at Company
-
-Attrition by Overtime
-
-Attrition by Gender
-
-Interactive Filters / Slicers
-
-💡 Key Insights
-
-Analysed employee attrition across different age groups and departments.
-
-Identified variations in attrition across job roles and salary levels.
-
-Examined the relationship between employee tenure and attrition.
-
-Compared attrition between employees working overtime and those who do not.
-
-Analysed attrition patterns across gender and education fields.
-
-Created an interactive dashboard to support HR decision-making.
-
-📁 Project Structure
-
+```text
 HR-Analytics-Employee-Attrition/
 │
 ├── Dataset/
-│   └── HR Data (1).csv
-│
 ├── SQL/
-│   └── HR_Analytics.sql
-│
 ├── PowerBI/
-│   └── HR_Analytics_Dashboard.pbix
-│
 ├── Dashboard/
-│   └── Dashboard.png
-│
 └── README.md
+```
 
-🚀 Future Improvements
+## 🚀 Future Improvements
 
-Add advanced DAX measures.
+- Add advanced DAX measures
+- Add employee retention recommendations
+- Add predictive attrition analysis
+- Automate data refresh
 
-Analyse employee satisfaction and promotion patterns.
+## ⭐ Conclusion
 
-Add employee retention recommendations.
+This project demonstrates an end-to-end **HR Analytics workflow using SQL Server and Power BI**, from data cleaning and analysis to interactive dashboard creation.
 
-Add predictive attrition analysis.
+## 👨‍💻 Author
 
-Automate SQL and Power BI data refresh.
-
-⭐ Conclusion
-
-This project demonstrates an end-to-end HR Analytics solution using SQL Server and Power BI. SQL was used for data cleaning and analysis, while Power BI was used to create an interactive dashboard for understanding employee attrition and workforce patterns.
-
-👨‍💻 Author
-
-Litile Gupta
-
-⭐ If you found this project useful, consider giving it a Star!
+**Litile Gupta**
